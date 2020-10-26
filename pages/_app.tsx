@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MyApp(props) {
+export default function MyApp(props:any) {
   const { Component, pageProps } = props;
   const classes = useStyles();
 
