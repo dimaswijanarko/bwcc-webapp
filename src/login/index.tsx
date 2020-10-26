@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import qs from 'qs';
+import { AxiosRequestConfig } from "axios";
+import qs from "qs";
 import { useForm } from "react-hook-form";
 import { Container, Box, Input as TextField, Button } from "@material-ui/core";
 import { useStyles } from "./styles";
@@ -15,16 +16,17 @@ const Login = () => {
   };
 
   const onSubmit = async () => {
-    const options = {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    const options: AxiosRequestConfig = {
+      method: "post",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
       data: qs.stringify(values),
-      url : 'https://cors-anywhere.herokuapp.com/https://bwcc.inovasialfatih.com/api/public/user/login?key=m3svkHTbtMPiuIHybgdjDjsW2hEE29YN',
+      url:
+        "https://cors-anywhere.herokuapp.com/https://bwcc.inovasialfatih.com/api/public/user/login?key=m3svkHTbtMPiuIHybgdjDjsW2hEE29YN",
     };
 
     try {
       const { data } = await API(options);
-      console.log(data)
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +36,7 @@ const Login = () => {
     <div className={classes.wrapper}>
       <Container className={classes.container}>
         <div className={classes.imgWrapper}>
-          <img src="/images/small_logo_bwcc.png" alt="bwcc-logo"/>
+          <img src="/images/small_logo_bwcc.png" alt="bwcc-logo" />
         </div>
         <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Box>
@@ -49,13 +51,14 @@ const Login = () => {
                 required: "Required",
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "invalid email address"
-                }
+                  message: "invalid email address",
+                },
               })}
               error={errors.email && errors.email.message ? true : false}
             />
-            {errors.email && errors.email.message ?  <p className="error-message">{errors.email.message}</p> : null}
-           
+            {errors.email && errors.email.message ? (
+              <p className="error-message">{errors.email.message}</p>
+            ) : null}
           </Box>
           <Box>
             <TextField
@@ -70,7 +73,9 @@ const Login = () => {
               })}
               error={errors.password && errors.password.message ? true : false}
             />
-            {errors.password && errors.password.message ?  <p className="error-message">{errors.password.message}</p> : null}
+            {errors.password && errors.password.message ? (
+              <p className="error-message">{errors.password.message}</p>
+            ) : null}
           </Box>
           <Box className={classes.btnWrapper}>
             <Button variant="contained" color="primary" type="submit">

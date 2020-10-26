@@ -6,6 +6,11 @@ import Alert from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import ax from "config/api";
 
+interface ILoader {
+  status: string;
+  message: string;
+}
+
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -14,20 +19,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const useAxiosLoader = () => {
-  const [counter, setCounter] = useState(0);
-  const [errorMessage, setError] = useState({ status: false, message: "" });
-  const inc = useCallback(() => setCounter((counter) => counter + 1), [
-    setCounter,
+  const [loader, setLoader] = useState<ILoader>({ status: 'hide', message: "" });
+  const inc = useCallback(() => setLoader((state) => { return {...state, status: 'loading'}}), [
+    setLoader,
   ]); // add to counter
-  const dec = useCallback(() => setCounter((counter) => counter - 1), [
-    setCounter,
+  const dec = useCallback((param) => setLoader((state) => {return {...state, status: 'hide', ...param}}), [
+    setLoader,
   ]); // remove from counter
 
   const interceptors = useMemo(
     () => ({
-      request: (config) => (inc(), config),
-      response: (response) => (dec(), response),
-      error: (error) => (dec(), Promise.reject(error)),
+      request: (config: any) => (inc(), config),
+      response: (response: any,param:object) => (dec(param), response),
+      error: (error: any) => (dec({status: 'err', message:error.message}), Promise.reject(error)),
     }),
     [inc, dec]
   ); // create the interceptors
@@ -41,9 +45,10 @@ const useAxiosLoader = () => {
     // add response interceptors
     const resInterceptor = ax.interceptors.response.use((res) => {
       const { data } = res;
-      if (data.status === "Error")
-        setError({ status: true, message: data.data.message });
-      return interceptors.response(res);
+      if (data.status === "Error"){
+        return interceptors.response(res,{ status: 'err', message: data.data.message });
+      }
+      return interceptors.response(res,{});
     }, interceptors.error);
 
     return () => {
@@ -53,29 +58,29 @@ const useAxiosLoader = () => {
     };
   }, [interceptors]);
 
-  return [counter > 0, { ...errorMessage, setError: setError }];
+  return [loader, setLoader] as const;
 };
 
 const GeneralLoader = () => {
-  const [loading, errorMessage] = useAxiosLoader();
+  const [loader, setLoader] = useAxiosLoader();
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <Snackbar
-        open={errorMessage.status}
+        open={loader.status === 'err'}
         autoHideDuration={3000}
-        onClose={() => errorMessage.setError({ status: false, message: "" })}
+        onClose={() => setLoader({ status: 'hide', message: "" })}
       >
         <Alert
           variant="filled"
           severity="error"
-          onClose={() => errorMessage.setError({ status: false, message: "" })}
+          onClose={() => setLoader({ status: 'hide', message: "" })}
         >
-          {errorMessage.message}
+          {loader.message}
         </Alert>
       </Snackbar>
-      <Backdrop className={classes.backdrop} open={loading}>
+      <Backdrop className={classes.backdrop} open={loader.status === 'loading'}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </React.Fragment>
