@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import { Container, Box, Input as TextField, Button } from "@material-ui/core";
 import { useStyles } from "./styles";
 import API from "config/api";
+import { useRouter } from 'next/router'
 
-const Login = () => {
+const Login = (props: any) => {
+  const router = useRouter();
   const classes = useStyles();
   const [values, setValues] = useState({ email: "", password: "" });
   const { handleSubmit, register, errors } = useForm();
@@ -25,8 +27,11 @@ const Login = () => {
     };
 
     try {
-      const { data } = await API(options);
-      console.log(data);
+      const { data: {status, data} } = await API(options);
+      if(status === 'Success'){
+        document.cookie = `bwccKey=${data.token_user}; path=/`;
+        router.push('/home')
+      }
     } catch (error) {
       console.log(error);
     }

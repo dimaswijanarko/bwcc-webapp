@@ -1,6 +1,9 @@
 import React from "react";
-import Login from "src/login"
+import Login from "src/login";
+import publicRoute from "components/route/publicRoute";
 
-export default function Index() {
-  return (<Login/>);
-}
+const Index = (props: any) => {
+  return <Login {...props} />;
+};
+
+export default publicRoute(Index);
