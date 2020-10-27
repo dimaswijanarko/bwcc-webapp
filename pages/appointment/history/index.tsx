@@ -14,12 +14,22 @@ Index.getInitialProps = async (ctx) => {
     data: {
       data: { status },
     },
-  } = await API.get(`booking/history?key=${key}`);
+  } = await API.get(`booking/history?key=${key}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+    },
+  });
   const {
     data: {
       data: { status: ClassData },
     },
-  } = await API.get(`class/list_booking_class?key=${key}`);
+  } = await API.get(`class/list_booking_class?key=${key}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+    },
+  });
   return {
     defaultData: {
       booking: status ? status : [],
