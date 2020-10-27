@@ -9,8 +9,8 @@ const Home = () => {
 
   return (
     <React.Fragment>
-      <Header />
-      <Container style={{marginTop:80}}>ini home</Container>
+      <Header backButton title="Add Class"/>
+      <Container style={{marginTop:80}}>ini add class</Container>
       <Navigation/>
     </React.Fragment>
   );
