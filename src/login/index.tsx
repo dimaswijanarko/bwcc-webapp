@@ -23,7 +23,7 @@ const Login = (props: any) => {
       headers: { "content-type": "application/x-www-form-urlencoded" },
       data: qs.stringify(values),
       url:
-        "https://cors-anywhere.herokuapp.com/https://bwcc.inovasialfatih.com/api/public/user/login?key=m3svkHTbtMPiuIHybgdjDjsW2hEE29YN",
+        "user/login?key=m3svkHTbtMPiuIHybgdjDjsW2hEE29YN",
     };
 
     try {
@@ -43,7 +43,7 @@ const Login = (props: any) => {
         <div className={classes.imgWrapper}>
           <img src="/images/small_logo_bwcc.png" alt="bwcc-logo" />
         </div>
-        <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+        <form className="form-container" autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
           <Box>
             <TextField
               placeholder="email"

@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <React.Fragment>
       <Header />
-      <Container style={{marginTop:80}}>ini home</Container>
+      <Container style={{marginTop:80}}>ini account</Container>
       <Navigation/>
     </React.Fragment>
   );

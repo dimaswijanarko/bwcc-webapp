@@ -14,8 +14,7 @@ const useStyles = makeStyles({
     margin: "0 auto",
     "max-width": 480,
     height: "100%",
-    "-webkit-overflow-scrolling": "touch",
-    background: "#fff",
+    overflow: 'scroll'
   },
 });
 
