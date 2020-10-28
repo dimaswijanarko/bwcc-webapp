@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "@material-ui/core";
+import { Container, Tabs, Tab } from "@material-ui/core";
 import Header from "components/header";
 import Navigation from "components/navigation";
+import Schedule from "./part/schedule";
+import { useStyles } from "./styles";
 
 const History = ({ defaultData, ...props }) => {
+  const classes = useStyles();
   const { booking, classData } = defaultData;
-  const [bookingData, setBookingData] = useState({ success: [], failed: [] });
-  const [classBookingData, setClassData] = useState({ success: [], failed: [] });
 
-  useEffect(() => {
-    if (booking) {
-      const successData = booking.filter((x) => x.status === "6");
-      const failedData = booking.filter((x) => x.status === "11");
-      setBookingData({
-        ...bookingData,
-        success: [...successData],
-        failed: [...failedData],
-      });
-    }
+  const [value, setValue] = React.useState(0);
 
-    if (classData) {
-      const successData = booking.filter((x) => x.status === "6");
-      const failedData = booking.filter((x) => x.status === "11");
-      setClassData({
-        ...classBookingData,
-        success: [...successData],
-        failed: [...failedData],
-      });
-    }
-  }, [booking]);
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
+
   return (
     <React.Fragment>
       <Header />
-      <Container style={{ marginTop: 80 }}>ini histroy</Container>
+      <Container className={classes.root}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="on"
+          indicatorColor="primary"
+          className="custom-tab"
+        >
+          <Tab label="Jadwal Dokter" fullWidth/>
+          <Tab label="Kelas Edukasi" fullWidth/>
+        </Tabs>
+        <div className="content">
+          {value === 0 && (<Schedule defaultData={booking}/>)}
+          {value === 1 && (<div>tab2</div>)}
+        </div>
+      </Container>
       <Navigation />
     </React.Fragment>
   );
