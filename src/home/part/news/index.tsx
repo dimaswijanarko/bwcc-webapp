@@ -10,21 +10,19 @@ import {
 } from "@material-ui/core";
 import { useStyles } from "./styles";
 
-const Notification = () => {
+const Notification = ({defaultData}) => {
   const classes = useStyles();
   return (
     <React.Fragment>
       <Header />
       <div className={classes.root}>
         <List>
-        {[...Array(15)].map((x, i) =>
-          <ListItem className="list-card" key={i}>
+        {defaultData.map((x, i) =>
+          <ListItem className="list-card" key={x.news_id}>
           <ListItemAvatar>
-            <Avatar>
-              <img src="/images/ic_launcher_round.png" alt="notif-icon"/>
-            </Avatar>
+              <img src={x.image_url} alt="notif-icon"/>
           </ListItemAvatar>
-          <ListItemText primary="Janji Dokter" secondary="Jadwal janji anda dengan dr xxx telah diubah, silakan cek di appointmet aatu klik disini" />
+          <ListItemText primary={x.title} secondary={x.short_content} />
         </ListItem>
         )}
   

@@ -2,8 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: 65,
-    marginBottom: 80,
     padding: '0 8px',
 
     "& .list-card":{
@@ -15,7 +13,17 @@ export const useStyles = makeStyles((theme) => ({
       "& img": {
         height: 56,
         width: "auto",
+        marginRight : 10
       },
+
+      "& .MuiListItemText-root":{
+        "& .MuiListItemText-primary ":{
+          width: 200,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }
+      }
     }
   },
 }));

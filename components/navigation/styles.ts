@@ -10,13 +10,14 @@ export const useStyles = makeStyles((theme) => ({
     background: "#fff",
 
     "& .tab-wrapper": {
+      height: 56,
       maxWidth: 480,
       margin: "0 auto",
       
       "& .MuiTab-root":{
           minWidth: 0,
           minHeight: 56,
-          padding: 6,
+          padding: 0,
 
         "&.Mui-selected":{
             "& svg":{
@@ -40,7 +41,7 @@ export const useStyles = makeStyles((theme) => ({
     "& .add-btn-tab":{
         "& svg":{
            fill: `${theme.palette.primary.main} !important`,
-           fontSize: '4rem'
+           fontSize: '3rem'
         }
     }
   },
