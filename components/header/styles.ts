@@ -18,6 +18,7 @@ export const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
     color: theme.palette.primary.main,
+    zIndex: 2,
 
     "&.bwcc-icon":{
       display: 'flex',

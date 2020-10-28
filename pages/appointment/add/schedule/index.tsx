@@ -1,6 +1,6 @@
 import React from "react";
 import cookies from "next-cookies";
-import Home from "src/home";
+import Home from "src/appointment/add/addSchedule";
 import withPrivateRoute from "components/route/privateRoute";
 import API from "config/api";
 
@@ -12,18 +12,16 @@ Index.getInitialProps = async (ctx) => {
   const key = cookies(ctx).bwccKey;
   const {
     data: {
-      data : {data},
+      data: { status },
     },
-  } = await API.get(`news/list?key=${key}`, {
+  } = await API.get(`booking/get_schedule1?key=${key}`, {
     headers: {
       "Content-Type": "application/json",
       Accept: "*/*",
     },
   });
   return {
-    defaultData: {
-      newsData: data ? [data[0],data[1]] : [],
-    },
+    defaultData: status ? status : []
   };
 };
 
