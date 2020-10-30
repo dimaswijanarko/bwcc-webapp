@@ -1,8 +1,18 @@
 import React from "react";
+import {
+  SwipeableDrawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@material-ui/core";
+import PhoneIcon from "@material-ui/icons/Phone";
 import { useStyles } from "./styles";
 
 const GeneralContact = () => {
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const classes = useStyles();
+  const [state, setState] = React.useState(false);
 
   const contactData = [
     {
@@ -13,18 +23,51 @@ const GeneralContact = () => {
     {
       title: "call",
       icon: "ic_phone.png",
-      action: "tel:+6286268856959",
+      action: () => setState(true),
+      subItem : [
+        {
+          title : "0812-8585-8895",
+          action : "tel:+6281285858895",
+        },
+        {
+          title : "0812-9221-3325",
+          action : "tel:+6281292213325",
+        },
+        {
+          title : "021-7450873",
+          action : "tel:+62217450873",
+        }
+      ]
     },
     {
       title: "Whatsapp",
       icon: "ic_whatsapp.png",
       action: "https://api.whatsapp.com/send?phone=6281388949944",
-    }
+    },
   ];
 
-  const handleClick = (val: any) => {
-    window.open(val);
+  const toggleDrawer = (open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      ((event as React.KeyboardEvent).key === "Tab" ||
+        (event as React.KeyboardEvent).key === "Shift")
+    ) {
+      return;
+    }
+    setState(open);
   };
+
+  const handleClick = (val: any) => {
+    if (typeof val === "function") val();
+    else window.open(val);
+  };
+
+  const clik = () => {
+    alert('klik');
+  }
 
   return (
     <div className={classes.root}>
@@ -34,13 +77,42 @@ const GeneralContact = () => {
         </div>
         <div className="list-contact">
           {contactData.map((item, index) => (
-            <div key={index} onClick={() => handleClick(item.action)} className="contact-container">
-              <img src={`/images/${item.icon}`} alt="icon"/>
+            <div
+              key={index}
+              onClick={() => handleClick(item.action)}
+              className="contact-container"
+            >
+              <img src={`/images/${item.icon}`} alt="icon" />
               <h5>{item.title}</h5>
             </div>
           ))}
         </div>
       </div>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={state}
+        disableBackdropTransition={!iOS} 
+        disableDiscovery={iOS}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+      >
+        <div
+          role="presentation"
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
+        >
+          <List>
+            {contactData[1].subItem.map((data, index) => (
+               <ListItem button onClick={() => handleClick(data.action)} key={index}>
+               <ListItemIcon>
+                 <PhoneIcon />
+               </ListItemIcon>
+               <ListItemText primary={data.title} />
+             </ListItem>
+            ))}
+          </List>
+        </div>
+      </SwipeableDrawer>
     </div>
   );
 };
