@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Tabs, Tab } from "@material-ui/core";
+import { Container, Paper, Tabs, Tab } from "@material-ui/core";
 import Header from "components/header";
 import Navigation from "components/navigation";
 import Schedule from "./part/schedule";
@@ -19,20 +19,22 @@ const History = ({ defaultData, ...props }) => {
     <React.Fragment>
       <Header />
       <Container className={classes.root}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="on"
-          indicatorColor="primary"
-          className="custom-tab"
-        >
-          <Tab label="Jadwal Dokter" fullWidth/>
-          <Tab label="Kelas Edukasi" fullWidth/>
-        </Tabs>
+        <Paper>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons="on"
+            indicatorColor="primary"
+            className="custom-tab"
+          >
+            <Tab label="Jadwal Dokter" fullWidth />
+            <Tab label="Kelas Edukasi" fullWidth />
+          </Tabs>
+        </Paper>
         <div className="content">
-          {value === 0 && (<Schedule defaultData={booking}/>)}
-          {value === 1 && (<div>tab2</div>)}
+          {value === 0 && <Schedule defaultData={booking} />}
+          {value === 1 && <div>tab2</div>}
         </div>
       </Container>
       <Navigation />
