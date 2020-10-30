@@ -42,6 +42,10 @@ export const useStyles = makeStyles((theme) => ({
             margin : 'unset',
             marginTop: 5,
             fontWeight : 'unset'
+          },
+
+          "&:last-child":{
+            borderRight: 'unset'
           }
         },
       }

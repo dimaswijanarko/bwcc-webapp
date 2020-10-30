@@ -10,30 +10,43 @@ const Index = (props: any) => {
 
 Index.getInitialProps = async (ctx) => {
   const key = cookies(ctx).bwccKey;
-  const {
-    data: {
-      data: { status },
-    },
-  } = await API.get(`booking/history?key=${key}`, {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "*/*",
-    },
-  });
-  const {
-    data: {
-      data: { status: ClassData },
-    },
-  } = await API.get(`class/list_booking_class?key=${key}`, {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "*/*",
-    },
-  });
+  let bookingData = [];
+  let classData = []
+
+  try {
+
+    const {
+      data: {
+        data: { status },
+      },
+    } = await API.get(`booking/history?key=${key}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+    });
+
+    bookingData = [...status];
+
+    const {
+      data: {
+        data: { status: ClassData },
+      },
+    } = await API.get(`class/list_booking_class?key=${key}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+    });
+    classData = [...ClassData];
+  } catch (error) {
+    
+  }
+  
   return {
     defaultData: {
-      booking: status ? status : [],
-      classData: ClassData ? ClassData : [],
+      booking: bookingData,
+      classData: classData,
     },
   };
 };

@@ -14,7 +14,8 @@ const useStyles = makeStyles({
     margin: "0 auto",
     "max-width": 480,
     height: "100%",
-    overflow: 'scroll'
+    overflow: 'scroll',
+    position: 'relative'
   },
 });
 
