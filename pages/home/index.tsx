@@ -22,7 +22,7 @@ Index.getInitialProps = async (ctx) => {
         Accept: "*/*",
       },
     });
-    res = [...data];
+    res = [data[0],data[1]];
   } catch (error) {
     res = []
   }
