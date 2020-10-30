@@ -32,7 +32,7 @@ const History = ({ bwccKey, ...props }) => {
         },
       });
   
-      bookingData = setDefaultData({...defaultData, booking : [...status]}); 
+      setDefaultData({...defaultData, booking : [...status]}); 
     } catch (error) {
       console.log(error);
     }

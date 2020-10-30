@@ -8,6 +8,7 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@material-ui/core";
+import Skeleton from '@material-ui/lab/Skeleton';
 import { useStyles } from "./styles";
 
 const Notification = ({ defaultData }) => {
@@ -26,7 +27,12 @@ const Notification = ({ defaultData }) => {
                   <ListItemText primary={x.title} secondary={x.short_content} />
                 </ListItem>
               ))
-            : "ini kosong"}
+            : (
+              [...Array(2)].map((x,i) => (
+                 <ListItem className="list-card" key={i}>
+                    <Skeleton width={'100%'} height={100}/>
+                 </ListItem>
+              )))}
         </List>
       </div>
       <Navigation />
