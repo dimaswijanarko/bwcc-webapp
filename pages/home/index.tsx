@@ -9,27 +9,8 @@ const Index = (props: any) => {
 };
 
 Index.getInitialProps = async (ctx) => {
-  const key = cookies(ctx).bwccKey;
-  let res = [];
-  try {
-    const {
-      data: {
-        data : {data},
-      },
-    } = await API.get(`news/list?key=${key}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "*/*",
-      },
-    });
-    res = [...data];
-  } catch (error) {
-    res = []
-  }
-  return {
-    defaultData: {
-      newsData: res,
-    },
+   return {
+    bwccKey : cookies(ctx).bwccKey || null,
   };
 };
 

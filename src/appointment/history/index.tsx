@@ -5,15 +5,43 @@ import Navigation from "components/navigation";
 import Schedule from "./part/schedule";
 import { useStyles } from "./styles";
 
-const History = ({ defaultData, ...props }) => {
+import API from "config/api";
+
+const History = ({ bwccKey, ...props }) => {
   const classes = useStyles();
-  const { booking, classData } = defaultData;
+
+  const [defaultData, setDefaultData] = React.useState({booking : [], classData : []});
 
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  const getHistory = async () => {
+
+    try {
+      const {
+        data: {
+          data: { status },
+        },
+      } = await API.get(`booking/history?key=${bwccKey}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "*/*",
+        },
+      });
+  
+      setDefaultData({...defaultData, booking : [...status]}); 
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  useEffect(() => {
+    getHistory();
+  }, [])
 
   return (
     <React.Fragment>
@@ -33,7 +61,7 @@ const History = ({ defaultData, ...props }) => {
           </Tabs>
         </Paper>
         <div className="content">
-          {value === 0 && <Schedule defaultData={booking} />}
+          {value === 0 && <Schedule defaultData={defaultData.booking} />}
           {value === 1 && <div>tab2</div>}
         </div>
       </Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Grid } from "@material-ui/core";
 import Header from "components/header";
 import Navigation from "components/navigation";
@@ -8,7 +8,9 @@ import News from "./part/news";
 import { useRouter } from 'next/router';
 import { useStyles } from "./styles";
 
-const Home = ({...props}) => {
+import API from "config/api";
+
+const Home = ({bwccKey,...props}) => {
   const router = useRouter();
   const classes = useStyles();
 
@@ -29,6 +31,32 @@ const Home = ({...props}) => {
       url: "/appointment/add/class",
     }
   ];
+
+  const [defaultData, setDefaultData] = React.useState({newsData : []});
+
+  const getNews = async () => {
+
+    try {
+      const {
+        data: {
+          data : {data},
+        },
+      } = await API.get(`news/list?key=${bwccKey}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "*/*",
+        },
+      });
+      setDefaultData({...defaultData, newsData : [data[0],data[1]]});
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+  useEffect(() => {
+    getNews();
+  }, [])
 
   return (
     <React.Fragment>
@@ -61,7 +89,7 @@ const Home = ({...props}) => {
           <h6>Lihat semua</h6>
         </div>
         <div className="wrapper">
-          <News defaultData={props.defaultData.newsData}/>
+          <News defaultData={defaultData.newsData}/>
         </div>
       </Container>
       <GeneralContact />
