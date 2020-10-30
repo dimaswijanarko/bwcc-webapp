@@ -18,7 +18,7 @@ const GeneralContact = () => {
     {
       title: "Whatsapp",
       icon: "ic_whatsapp.png",
-      action: "https://web.whatsapp.com/send?phone=6281388949944",
+      action: "https://api.whatsapp.com/send?phone=6281388949944",
     }
   ];
 
