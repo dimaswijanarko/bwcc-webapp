@@ -31,11 +31,12 @@ export const useStyles = makeStyles((theme) => ({
           padding: 3,
           marginTop: 10,
           cursor: 'pointer',
-          borderRight: `.5px solid ${theme.palette.primary.light}`,
+          borderRight: `.5px solid ${theme.palette.primary.main}`,
 
-          "& img":{
+          "& svg":{
             height: 30,
-            width: 'auto'
+            width: 'auto',
+            color : theme.palette.primary.main
           },
 
           "& h5":{
@@ -49,6 +50,11 @@ export const useStyles = makeStyles((theme) => ({
           }
         },
       }
+    },
+  },
+  callDrawer:{
+    "& .icon, & .MuiListItemText-primary":{
+      color : theme.palette.primary.main
     }
   },
 }));
