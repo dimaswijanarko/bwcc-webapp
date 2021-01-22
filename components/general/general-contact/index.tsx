@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
-import PhoneIcon from "@material-ui/icons/Phone";
+import { Phone as PhoneIcon, Mail as MailIcon, WhatsApp as WhatsappIcon } from "@material-ui/icons";
 import { useStyles } from "./styles";
 
 const GeneralContact = () => {
@@ -16,13 +16,13 @@ const GeneralContact = () => {
 
   const contactData = [
     {
-      title: "email",
-      icon: "ic_email.png",
+      title: "Email",
+      icon: MailIcon,
       action: "mailto:klinikbwcc.@gmail.com",
     },
     {
-      title: "call",
-      icon: "ic_phone.png",
+      title: "Call",
+      icon: PhoneIcon,
       action: () => setState(true),
       subItem : [
         {
@@ -41,7 +41,7 @@ const GeneralContact = () => {
     },
     {
       title: "Whatsapp",
-      icon: "ic_whatsapp.png",
+      icon: WhatsappIcon,
       action: "https://api.whatsapp.com/send?phone=6281388949944",
     },
   ];
@@ -82,7 +82,7 @@ const GeneralContact = () => {
               onClick={() => handleClick(item.action)}
               className="contact-container"
             >
-              <img src={`/images/${item.icon}`} alt="icon" />
+              <item.icon/>
               <h5>{item.title}</h5>
             </div>
           ))}
@@ -100,12 +100,13 @@ const GeneralContact = () => {
           role="presentation"
           onClick={toggleDrawer(false)}
           onKeyDown={toggleDrawer(false)}
+          className={classes.callDrawer}
         >
           <List>
             {contactData[1].subItem.map((data, index) => (
                <ListItem button onClick={() => handleClick(data.action)} key={index}>
                <ListItemIcon>
-                 <PhoneIcon />
+                 <PhoneIcon className="icon"/>
                </ListItemIcon>
                <ListItemText primary={data.title} />
              </ListItem>

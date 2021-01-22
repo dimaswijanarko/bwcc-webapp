@@ -17,17 +17,19 @@ const Notification = () => {
       <Header />
       <div className={classes.root}>
         <List>
-        {[...Array(15)].map((x, i) =>
-          <ListItem className="list-card" key={i}>
-          <ListItemAvatar>
-            <Avatar>
-              <img src="/images/ic_launcher_round.png" alt="notif-icon"/>
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Janji Dokter" secondary="Jadwal janji anda dengan dr xxx telah diubah, silakan cek di appointmet aatu klik disini" />
-        </ListItem>
-        )}
-  
+          {[...Array(15)].map((x, i) => (
+            <ListItem className="list-card" key={i}>
+              <ListItemAvatar>
+                <Avatar>
+                  <img src="/images/ic_launcher_round.png" alt="notif-icon" />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary="Janji Dokter"
+                secondary="Jadwal janji anda dengan dr XXX telah diubah, silakan cek di appointmet aatu klik disini"
+              />
+            </ListItem>
+          ))}
         </List>
       </div>
       <Navigation />
